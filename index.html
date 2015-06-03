@@ -14,24 +14,20 @@
     <h1>小さい数字からタッチ</h1>
     <p>Time: <span id="time">0.0</span> sec.</p>
     <div id="board">
-      <input type="button" id="button_0" value="?" onclick="touched(0);">
-      <input type="button" id="button_1" value="?" onclick="touched(1);">
-      <input type="button" id="button_2" value="?" onclick="touched(2);"><br>
-      <input type="button" id="button_3" value="?" onclick="touched(3);">
-      <input type="button" id="button_4" value="?" onclick="touched(4);">
-      <input type="button" id="button_5" value="?" onclick="touched(5);"><br>
-      <input type="button" id="button_6" value="?" onclick="touched(6);">
-      <input type="button" id="button_7" value="?" onclick="touched(7);">
-      <input type="button" id="button_8" value="?" onclick="touched(8);">
     </div>
 
-    <p><input type="button" value="start!" onclick="timerStart();"></p>
+    <p><input type="button" value="start!" id="timerStart"></p>
 
     <script>
+      var size = 3;
       var currentNum;
       var timer;
       var startTIme;
       var isPlaying = false;
+
+      document.getElementById('timerStart').onclick = function() {
+        timerStart();
+      };
 
       function timerStart() {
         initBoard();
@@ -41,34 +37,37 @@
           isPlaying = true;
           runTimer();
         }
+      }
 
+      function createButton(num){
+        var btn;
+        btn = document.createElement('input');
+        btn.type = 'button';
+        btn.value = num;
+        btn.onclick = function(){
+          if (this.value == currentNum){
+            this.disabled = true;
+            currentNum++;
+          }
+          if (currentNum == size * size){
+            clearTimeout(timer);
+            isPlaying = false;
+            alert('Your Score' + document.getElementById('time').innerHTML);
+          }
+        };
+        return btn;
       }
 
       function initBoard(){
-        var nums = [];
-        var num;
-        var btn;
-        for(var i = 0; i < 9; i++){
-          nums.push(i);
-        }
-        for(var i = 0; i<9; i++){
-          num = nums.splice(Math.floor(Math.random() * nums.length), 1);
-          btn =  document.getElementById('button_' + i);
-          btn.value = num[0];
-          btn.disabled = false;
+        var buttons = [];
+        for (var i = 0; i < size * size; i++ ){
+          buttons.push(createButton(i));
+
         }
       }
 
       function touched(i){
         var btn = document.getElementById('button_' + i);
-        if (btn.value == currentNum){
-          btn.disabled = true;
-          currentNum++;
-        }
-        if (currentNum == 9){
-          clearTimeout(timer);
-          isPlaying = false;
-          alert('Your Score' + document.getElementById('time').innerHTML);
         }
       }
 
