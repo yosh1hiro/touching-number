@@ -19,6 +19,7 @@
     <p><input type="button" value="start!" id="timerStart"></p>
 
     <script>
+      (function(){
       var size = 3;
       var currentNum;
       var timer;
@@ -69,6 +70,10 @@
 
         board = document.getElementById('board');
 
+        while(board.firstChild) {
+          board.removeChild(board.firstChild);
+        }
+
         while(buttons.length) {
           button = buttons.splice(Math.floor(Math.random() * buttons.length), 1);
           board.appendChild(button[0]);
@@ -84,6 +89,7 @@
           runTimer();
         }, 100);
       }
+    })();
     </script>
 
   </body>
