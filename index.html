@@ -45,6 +45,14 @@
           document.getElementById('button_' + i).value = num[0];
         }
       }
+
+      function touched(i){
+        var btn = document.getElementById('button_' + i);
+        if (btn.value == currentNum){
+          btn.disabled = true;
+          currentNum++;
+        }
+      }
     </script>
 
   </body>
