@@ -31,24 +31,31 @@
       var currentNum;
       var timer;
       var startTIme;
+      var isPlaying = false;
 
       function timerStart() {
         initBoard();
         currentNum = 0;
         startTIme = (new Date()).getTime();
-        runTimer();
+        if (isPlaying == false) {
+          isPlaying = true;
+          runTimer();
+        }
 
       }
 
       function initBoard(){
         var nums = [];
         var num;
+        var btn;
         for(var i = 0; i < 9; i++){
           nums.push(i);
         }
         for(var i = 0; i<9; i++){
           num = nums.splice(Math.floor(Math.random() * nums.length), 1);
-          document.getElementById('button_' + i).value = num[0];
+          btn =  document.getElementById('button_' + i);
+          btn.value = num[0];
+          btn.disabled = false;
         }
       }
 
@@ -57,6 +64,11 @@
         if (btn.value == currentNum){
           btn.disabled = true;
           currentNum++;
+        }
+        if (currentNum == 9){
+          clearTimeout(timer);
+          isPlaying = false;
+          alert('Your Score' + document.getElementById('time').innerHTML);
         }
       }
 
