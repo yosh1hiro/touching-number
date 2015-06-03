@@ -60,14 +60,21 @@
 
       function initBoard(){
         var buttons = [];
+        var board;
+        var button;
+
         for (var i = 0; i < size * size; i++ ){
           buttons.push(createButton(i));
-
         }
-      }
 
-      function touched(i){
-        var btn = document.getElementById('button_' + i);
+        board = document.getElementById('board');
+
+        while(buttons.length) {
+          button = buttons.splice(Math.floor(Math.random() * buttons.length), 1);
+          board.appendChild(button[0]);
+          if (buttons.length % size == 0) {
+            board.appendChild(document.createElement('br'));
+          }
         }
       }
 
