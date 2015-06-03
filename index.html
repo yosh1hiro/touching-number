@@ -28,9 +28,15 @@
     <p><input type="button" value="start!" onclick="timerStart();"></p>
 
     <script>
+      var currentNum;
+      var timer;
+      var startTIme;
+
       function timerStart() {
         initBoard();
         currentNum = 0;
+        startTIme = (new Date()).getTime();
+        runTimer();
 
       }
 
@@ -52,6 +58,13 @@
           btn.disabled = true;
           currentNum++;
         }
+      }
+
+      function runTimer(){
+        document.getElementById('time').innerHTML = (((new Date()).getTime() - startTIme) / 1000).toFixed(1);
+        timer = setTimeout(function() {
+          runTimer();
+        }, 100);
       }
     </script>
 
